@@ -1,0 +1,25 @@
+button{
+    font-size: 16px;
+    color: white;
+    background-color: green;
+    padding: 15px 30px;
+    width: 100px;
+}
+
+.count {
+    font-size: 50px;
+    padding: 30px 30px;
+    width: 200px;
+}
+
+.reset{
+    font-size: 16px;
+    color: white;
+    background-color: red;
+    padding: 15px 30px;
+    width: 200px;
+}
+
+body{
+    padding: 15px 30px;
+}
