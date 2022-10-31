@@ -10,12 +10,15 @@ import FooterComponent from "./FooterComponent.jsx";
 import LogoutComponent from "./LogoutComponent.jsx";
 import ErrorComponent from "./ErrorComponent.jsx";
 import WelcomeComponent from "./WelcomeComponent.jsx";
+import TodoComponent from "./TodoComponent.jsx";
 
 class TodoApp extends Component{
 
     render(){
         const LoginComponentWithNavigation = withNavigation(LoginComponent);
         const WelcomeComponentWithParams = withParams(WelcomeComponent);
+        const ListTodosComponentWithNavigation = withNavigation(ListTodosComponent) 
+        const TodoComponentWithParamsAndNavigation = withParams(withNavigation(TodoComponent));
 
         // const HeaderComponentWithNavigation = withNavigation(HeaderComponent);
         return(
@@ -29,6 +32,11 @@ class TodoApp extends Component{
 
                         <Route path="/" element={<LoginComponentWithNavigation />} />
                         <Route path="/login" element={<LoginComponentWithNavigation />} />
+                        <Route path="/todos" element={
+                            <AuthenticatedRoute>
+                                <ListTodosComponentWithNavigation /> 
+                            </AuthenticatedRoute>
+                        } />
                         {/*<Route path="/welcome" element={<WelcomeComponent />} />*/}
                         <Route path="/welcome/:name" element={
                             <AuthenticatedRoute>
@@ -36,16 +44,17 @@ class TodoApp extends Component{
                             </AuthenticatedRoute>
                         } /> 
                             
-                        <Route path="/todos" element={
-                        <AuthenticatedRoute>
-                            <ListTodosComponent />
-                        </AuthenticatedRoute>
-                        } />
-                                                
+                                                                    
                         <Route path="/logout" element={
                         <AuthenticatedRoute>
                             <LogoutComponent />
                         </AuthenticatedRoute>
+                        } />
+
+                        <Route path="/todos/:id" element={ 
+                            <AuthenticatedRoute>
+                                <TodoComponentWithParamsAndNavigation />
+                            </AuthenticatedRoute>
                         } />
                         <Route path="*" element={<ErrorComponent />} />
                     </Routes>

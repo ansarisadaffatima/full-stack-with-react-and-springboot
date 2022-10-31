@@ -1,5 +1,4 @@
 import React,{ Component } from "react";
-import { Navigate } from "react-router-dom";
 import AuthenticationService from "./AuthenticationService";
 
 class LoginComponent extends Component{
@@ -18,7 +17,6 @@ class LoginComponent extends Component{
         this.loginClicked = this.loginClicked.bind(this)
     }
     handleChange(event){
-        console.log(event.target.value)
 
         this.setState({
             [event.target.name] : event.target.value 
@@ -26,25 +24,38 @@ class LoginComponent extends Component{
         
     }
     loginClicked(){
-        if(this.state.username === 'Alex' & this.state.password === 'test'){
-            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
+        // if(this.state.username === 'Alex' & this.state.password === 'test'){
+        //     AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
+        //     this.props.navigate(`/welcome/${this.state.username}`)
+        //     // console.log("Successful Login")
+        //     // this.setState({
+        //     //     hasLoginFailed : false,
+        //     //     showSuccessMsg : true
+        //     // })
+            
+        // }
+            
+        // else{
+        //     console.log("Failed Login")
+        //     this.setState({
+        //         hasLoginFailed : true,
+        //         showSuccessMsg : false
+        //     })
+        // }
+        //console.log(this.state)
+
+        AuthenticationService.executeJwtAuthenticationService(this.state.username, this.state.password)
+        .then((response)=>{
+            AuthenticationService.registerSuccessfulLoginForJWT(this.state.username, response.data.token)
             this.props.navigate(`/welcome/${this.state.username}`)
-            // console.log("Successful Login")
-            // this.setState({
-            //     hasLoginFailed : false,
-            //     showSuccessMsg : true
-            // })
-            
-        }
-            
-        else{
+        })
+        .catch(()=>{
             console.log("Failed Login")
             this.setState({
                 hasLoginFailed : true,
                 showSuccessMsg : false
             })
-        }
-        //console.log(this.state)
+        })
     }
     // handleUsernameChange(event){
     //     console.log(event.target.value)
